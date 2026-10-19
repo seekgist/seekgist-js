@@ -1,0 +1,32 @@
+<!doctype html>
+<!-- Search box with debounced suggestions. Use a PUBLIC key locked to your site's origin.
+     Serve this folder and the built dist/ (e.g. `npx serve ..`), then open /examples/browser-suggest.html -->
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SeekGist suggest example</title>
+  </head>
+  <body>
+    <label for="q">ابحث في المتجر</label>
+    <input id="q" type="search" autocomplete="off" />
+    <ul id="list"></ul>
+    <script type="module">
+      import { SeekGist } from "../dist/index.js";
+
+      const client = new SeekGist({
+        apiKey: "sg_pub_REPLACE_ME_WITH_YOUR_PUBLIC_KEY_0000000000",
+        baseUrl: "http://localhost:58000",
+        keyInQuery: true, // no CORS preflight: faster first suggestion
+      });
+      const suggester = client.suggester({ debounceMs: 120, lang: "auto", products: 3 });
+      const list = document.getElementById("list");
+
+      document.getElementById("q").addEventListener("input", async (e) => {
+        const res = await suggester.input(e.target.value).catch(() => null);
+        if (!res) return; // too short, out of date, or failed: keep the old list
+        list.replaceChildren(...res.suggestions.map((s) => Object.assign(document.createElement("li"), { textContent: s.text })));
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+{
+  "name": "@seekgist/sdk",
+  "version": "1.0.0",
+  "description": "SeekGist API client for JavaScript and TypeScript (browser and Node 20+): Arabic-first e-commerce search, suggest, catalog sync, webhooks.",
+  "license": "MIT",
+  "author": "SeekGist <support@seekgist.com>",
+  "homepage": "https://seekgist.com/docs/sdk/js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seekgist/seekgist-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seekgist/seekgist-js/issues",
+    "email": "support@seekgist.com"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "seekgist",
+    "search",
+    "arabic",
+    "ecommerce",
+    "autocomplete",
+    "sdk"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": false
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "pack:check": "npm run build && npm pack --dry-run",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "20.19.43",
+    "typescript": "5.9.3",
+    "vitest": "4.1.11"
+  }
+}
